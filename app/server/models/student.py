@@ -1,4 +1,4 @@
-from typing import Optimal
+from typing import Optimal, Optional
 from pydantic import BaseModel, EmailStr, Field
 
 
