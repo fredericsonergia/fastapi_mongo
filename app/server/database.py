@@ -1,5 +1,7 @@
 import motor.motor_asyncio
 from bson.objectid import ObjectId
+from bson.son import SON
+
 
 # mongo on localhost
 MONGO_DETAILS = "mongodb://localhost:27017"
@@ -21,7 +23,7 @@ student_collection = database.get_collection("students_collection")
 def student_helper(student) -> dict:
     return {
         "id": str(student["_id"]),
-        "fullname": student["fullname"],
+        "fullname": str(student["fullname"]),
         "email": student["email"],
         "course_of_study": student["course_of_study"],
         "year": student["year"],
@@ -56,6 +58,17 @@ async def retrieve_student(id: str) -> dict:
     if student:
         return student_helper(student)
 
+# Retrieve a student with a matching ID
+async def do_retrieve_status(fullname: str) -> dict:
+    student = await student_collection.find_one({"fullname": ObjectId(fullname)})
+    if student:
+        return student_helper(student)
+
+""" # Retrieve a student with a matching fullname
+async def do_retrieve_status(i: str) -> dict:
+    cursor = await student_collection.find({"fullname": str(i)}, {"_id": 0,})
+    if cursor:
+        return student_helper(cursor) """
 
 # Update a student with a matching ID
 async def update_student(id: str, data: dict):
