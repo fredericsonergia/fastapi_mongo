@@ -1,5 +1,6 @@
-from fastapi import APIRouter, Body
+from fastapi import APIRouter
 from fastapi.encoders import jsonable_encoder
+from fastapi.params import Body
 
 # using the JSON Compatible Encoder from FastAPI 
 # to convert our models into a format that's JSON compatible.
